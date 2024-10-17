@@ -1,0 +1,52 @@
+---
+title: "Data Visulaization with ggplot"
+---
+
+# Course overview
+
+Creating clear and effective **data visualizations** is an important skill for any data scientist. This course will teach participants the key principles of data visualization and how to use the `ggplot2`library, along with useful extensions, to create high-quality plots efficiently. After completing the course, participants will have a strong understanding of how to make engaging and accessible visualizations. We will discuss the main concepts of the grammar of graphics and use hands-on examples to explore `ggplot2`'s utility to create multi-layered, more complex graphs.
+
+## Learning objectives
+
+-   Able to do data formatting.
+-   Understanding the general concepts of ggplot2.
+-   Learning the many options of customizing a ggplot.
+-   Learning to plot multiple data visualization.
+-   Gaining the major steps need to create engaging graphics.
+-   Hands on workshop with a project component.
+
+## Is this course for me?
+
+This course will be appropriate for you if you answer yes to these questions:
+
+-   Do you aim to build graphics in a fully reproducible way without the need to manually adjust details afterwards?
+
+-   Are you a biologist wanting to get make high quality graphics and learn bit of programming?
+
+# Instructor
+
+![](https://arvindkiyer.com/images/logo.png){fig-alt="Headshot of Dr.Arvind Iyer" style="float:right;padding: 0 0 0 10px;" width="93"}
+
+[**Dr. Arvind Iyer**](http://arvindkiyer.com/) (he/him) is a graduated computational biologist with a passion for research and computation. He love to solve problems (Mathematical, Logical, Technical, or even Personal). He like's helping others and ever willing to guide and mentor juniors as well peers.
+
+::: {align="center"}
+Find more about him at his [website](http://arvindkiyer.com/).
+:::
+
+# Prework
+
+Some basic knowledge of `R` programming is needed. One can learn from Alex Douglas et al. book [A introduction to R](https://intro2r.com/). If you want to run the workshop content locally on your machine, please make sure to install a suitable IDE (Rstudio, VS Code or others), a recent version of R.
+
+## Required Packages to be installed
+
+-   *tidyverse*
+
+Run this code to install the packages if needed:
+
+```         
+packages <- c('tidyverse')
+
+install.packages(setdiff(packages, rownames(installed.packages())))  
+```
+
+> **Note:** This section will be updated.

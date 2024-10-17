@@ -1,0 +1,20 @@
+---
+title: "Schedule"
+listing:
+  id: schedule
+  contents: materials
+  type: table
+  fields: [title, description]
+  field-display-names:
+      title: "Week"
+      description: "Topic"
+  sort-ui: false
+  filter-ui: false
+---
+
+# Schedule
+
+::: {#schedule}
+:::
+
+> Note: This section will be updated

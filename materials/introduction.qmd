@@ -1,0 +1,198 @@
+---
+title: "Day-0,1: Data Preperation and Introduction to ggplot2"
+description: "Data transformation and introduction to `ggplot2`"
+author:
+  - name: "Arvind Iyer"
+    id: AI
+    orcid: 0000-0002-8247-700X
+    email: ayalurarvind@gmail.com
+    degrees: PhD
+date: "10/15/2024"
+format: 
+  html:
+    toc: true
+    toc-title: Contents
+    toc-location: right-body
+    code-fold: False
+    page-layout: full
+  pdf:
+    toc: true
+---
+
+# Data Preparation
+
+Before visualizing data in R, you need to import it from an external source and format it properly. Ideally, data would come in a clean, error-free, rectangular format with no missing values, but that's rarely the case. In reality, data often requires cleaning and transformation to be useful for analysis. This process might involve handling missing data, correcting errors, restructuring columns, or converting data types. Proper preparation is key to ensuring that your visualizations accurately reflect the underlying patterns and insights in your data. A very import part of the data science life cycle.
+
+## Importing data into R
+
+R can import data from almost any source, including text files, excel spreadsheets etc. How do we do it? It is simple:
+
+```{r}
+#| results: hold
+# Load the library
+library(tidyverse)
+Salaries <- read_csv(file = 'data/Salaries.csv')
+Salaries <- read_tsv(file = 'data/Salaries.txt')
+# To know more about these function (any function) to check arguments of these functions.
+help("read_csv") # ?read_csv ?function would also show the help page.
+```
+
+## Cleaning data
+
+The most time consuming part. For this we use `tidyR` and `dplyr` packages. There are other ways to do the same. We will use `Salaries` data set (information about professor's salaries) for doing these tasks:
+
+-   Use `select` function to select some variables (columns)
+-   Use `mutate` function to create a new variable.
+-   Use `count` function to count a variable
+
+```{r}
+# First lets get a glimpse of the data
+glimpse(Salaries)
+
+# Use select function to select rank and discipline columns
+subset <- Salaries %>% select(rank,discipline)
+subset
+
+# Use mutate to create a new column color using discipline where A:red and B:blue  
+subset %>% mutate(color=ifelse(discipline=='A','red','blue'))
+
+#Use count function to count ranks
+Salaries %>% count(rank)
+```
+
+Must read and try to go through Data Transformation section of this [book](https://r4ds.hadley.nz/data-transform#groups)
+
+Do a read of chapter-2 of this [book](https://rkabacoff.github.io/datavis/DataPrep.html#cleaning-data).
+
+# Data Visualization
+
+## Introduction
+
+R offers multiple systems for creating graphs, but one of the most powerful and flexible is `ggplot2`.
+
+### What is `ggplot2`?
+
+`ggplot2` is a data visualization package for R developed by Hadley Wickham that provides a structured approach for visualization. This package is built on the grammar of graphics, a structured approach to designing and constructing visualizations in a consistent and intuitive manner.
+
+![](/images/grammer.png){fig-align="center" width="371"}
+
+Lets see these in action with the famous `iris` dataset. First let see a summary of the data.
+
+```{r}
+summary(iris)
+```
+
+@fig-ggplot2-1 takes in data as the argument which will generate a empty plot.
+
+```{r}
+#| label: fig-ggplot2-1
+#| fig-cap: "Passing data to ggplot2"
+#| warning: false
+#| fig-align: center
+#| fig-width: 4
+#| fig-height: 4 
+ggplot(iris)
+```
+
+@fig-ggplot2-2 adds Aesthetics to the plot.
+
+```{r}
+#| label: fig-ggplot2-2
+#| fig-cap: "Adding Aesthetics"
+#| warning: false
+#| fig-align: center
+#| fig-width: 4
+#| fig-height: 4 
+ggplot(iris,
+      aes(x=Sepal.Length, y=Sepal.Width, 
+          color=Species))
+```
+
+@fig-ggplot2-3 adds Geometries to the plot.
+
+```{r}
+#| label: fig-ggplot2-3
+#| fig-cap: "Adding Geometries"
+#| warning: false
+#| fig-align: center
+#| fig-width: 7
+#| fig-height: 5 
+ggplot(iris,
+      aes(x=Sepal.Length, y=Sepal.Width, 
+          color=Species))+
+  geom_point()
+```
+
+@fig-ggplot2-4 adds Scale to the plot.
+
+```{r}
+#| label: fig-ggplot2-4
+#| fig-cap: "Adding Scales"
+#| warning: false
+#| fig-align: center
+#| fig-width: 7
+#| fig-height: 5 
+ggplot(iris,
+      aes(x=Sepal.Length, y=Sepal.Width, 
+          color=Species))+
+  geom_point()+
+  scale_color_brewer(palette = 'Dark2')
+```
+
+@fig-ggplot2-4 adding Stats,theme,facets to the plot.
+
+```{r}
+#| label: fig-ggplot2-5
+#| fig-cap: "Adding Scales"
+#| warning: false
+#| fig-align: center
+#| fig-width: 7
+#| fig-height: 5 
+ggplot(iris,
+      aes(x=Sepal.Length, y=Sepal.Width, 
+          color=Species)) +
+    geom_point() +
+    scale_color_brewer(palette="Dark2") +
+    stat_summary(fun.y="mean", geom= "line") + 
+    coord_flip() +
+    facet_wrap(~Species) +
+    theme_bw() + theme(legend.position="top") +
+    annotate("text", x=7.5, y=2.5, label="Pval")
+```
+
+Let's create a bar plot of variable `rank` in similar steps on `Salaries` data.
+
+```{r}
+#| fig-cap: "Creating Bar Plot"
+#| warning: false
+#| fig-align: center
+#| fig-width: 7
+#| fig-height: 5 
+ggplot(data = Salaries, mapping = aes(x=rank,fill = rank,colour = rank))+
+  geom_bar()+
+  scale_fill_brewer(palette="Dark2")+
+  scale_color_brewer(palette="Dark2")+
+  theme_bw() + 
+  theme(legend.position="top") 
+```
+
+# References and Additional Materials
+
+For making this tutorial various online resources were used. Mentioning few over here:
+
+-   <https://ggplot2-book.org/>
+-   <https://socviz.co/index.html>
+-   <https://github.com/thomasp85/ggplot2_workshop>
+-   <https://rkabacoff.github.io/datavis/>
+-   <https://r4ds.hadley.nz/>
+-   <https://clauswilke.com/dataviz/>
+
+# Materials
+
++-------------+--------------+----------------------------------------+-----------------------------------------+
+|             | Description  | Slides                                 | Script                                  |
++=============+==============+========================================+=========================================+
+| 1           | Introduction | [Day_0](../materials/slides/day_0.pdf) | [Day_1](../materials/R_scripts/day_1.R) |
+|             |              |                                        |                                         |
+|             |              | [Day_1](../materials/slides/day_1.pdf) |                                         |
++-------------+--------------+----------------------------------------+-----------------------------------------+
